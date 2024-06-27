@@ -22,7 +22,7 @@ export const getAdministradorId = async (req, res)=>{
         const [rows] = await connection.query(GET_ID_ADMISTRADOR,[id])
         if(rows.length === 0 ){
             return res.status(400).json({
-                msg: "estudiante no encontrado"
+                msg: "administrador no encontrado"
             })
         }
         res.json(rows[0])

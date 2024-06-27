@@ -35,12 +35,12 @@ export const loginUser = async (req, res)=>{
         const [rows] =await connection.query(LOGIN_GESTIONADOR, [email])
         if(rows.length == 0){
             return res.send({
-                msg:"estudiante no encontrado"
+                msg:"gestionador no encontrado"
             })
         } 
-        const passwordCorrectG = verified(password, rows.password)
+        const passwordCorrectG =await verified(password, rows[0].password)
         if(passwordCorrectG){
-            const token = generateToken(rows.id)
+            const token = generateToken(rows[0].id)
           return res.send({
                 token:token,
                 type:'Gestionador'
@@ -58,9 +58,10 @@ export const loginUser = async (req, res)=>{
                 msg:"estudiante no encontrado"
             })
         }  
-        const passwordCorrectE = verified(password, rows.password)
-        if(passwordCorrectE){
-            const token = generateToken(rows.id)
+        const passwordCorrectE =await verified(password, rows[0].password)
+        console.log(passwordCorrectE)
+        if(passwordCorrectE ){
+            const token = generateToken(rows[0].id)
           return  res.send({
                 token:token,
                 type:'Estudiante'

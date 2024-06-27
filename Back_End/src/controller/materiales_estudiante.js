@@ -39,7 +39,8 @@ export const postMaterial_estudiantes= async (req, res)=>{
         res.send({
             id: rows.insertId,
             estudiante_id,
-            material_id
+            material_id,
+            msg:"Asignado correctamente"
         })
     } catch (error) {
         console.log(error)

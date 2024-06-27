@@ -48,7 +48,8 @@ export const postMaterial= async (req, res)=>{
 
 export const patchMaterial = async (req, res)=>{
     const {id} = req.params
-    const {cantidad_material, materiales, codigo, estado} = req.body 
+    const {cantidad_material, materiales, codigo, estado} = req.body
+    console.log(cantidad_material, materiales, codigo, estado) 
     try {
         const [result] = await connection.query(UPDATE_MATERIAL,[cantidad_material,materiales, codigo, estado, id])
         if (result.affectedRows === 0) return res.status(404).json({

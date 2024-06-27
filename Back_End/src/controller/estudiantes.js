@@ -1,5 +1,5 @@
 import { connection } from "../config/db.js";
-import { DELETE_ESTUDIANTE, GET_ESTUDIANTE, GET_ID_ESTUDIANTE, POST_ESTUDIANTE, UPDATE_ESTUDIANTE } from "../query/estudiante.query.js";
+import { DELETE_ESTUDIANTE, GET_ESTUDIANTE, GET_ID_ESTUDIANTE, GET_MATERIALES_ESTUDIANTE, POST_ESTUDIANTE, UPDATE_ESTUDIANTE } from "../query/estudiante.query.js";
 import { encrypt } from "../utils/bcrypt.js";
 
 export const getEstudiantes = async (req, res)=>{
@@ -11,6 +11,32 @@ export const getEstudiantes = async (req, res)=>{
     }
 }
 
+export const getEstudianteAuth = async(req, res)=>{
+    const {id} = req.user
+    try {
+        const [rows] = await connection.query(GET_ID_ESTUDIANTE,[id])
+        res.json(rows)
+
+    } catch (error) {
+        console.log(error)
+    }
+} 
+export const getMaterialesEstudiante = async (req, res)=>{
+    const {id} = req.params
+    try {
+        const [rows] = await connection.query(GET_MATERIALES_ESTUDIANTE,[id])
+        console.log(rows)
+        if(rows.length == 0){
+            res.send({
+                msg:"No tienes materiales asiganados"
+            })
+        }else{
+            res.send(rows)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 export const getEstudiantesId = async (req, res)=>{
     try {     
         const {id} = req.params
